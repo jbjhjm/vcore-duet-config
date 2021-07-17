@@ -16,6 +16,7 @@ G1 H2 Y30 F3000 ; Move Y MOTOR 30mm
 
 ; to move single Z motor, unlink the others from Z axis
 ; Instead of Z0.0:0.1:0.2, do for example:
+; Z0.0 = left 0.1 = middle 0.2 = right
 M584 X0.4 Y0.3 Z0.1 E0.5; set drive mapping
 
 
