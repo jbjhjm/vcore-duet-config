@@ -17,7 +17,7 @@ G1 H2 Y30 F3000 ; Move Y MOTOR 30mm
 
 
 ; Fans
-M106 P0 S0 ; Set speed of Fan P[n] to 0
+M106 P0 S0 ; Set speed of Fan P[n] to 0, H-1 to disable autocontrol
 
 
 ; Endstop
