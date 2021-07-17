@@ -1,6 +1,6 @@
 G90                                     ; send absolute coordinates...
 M83                                     ; ...but relative extruder moves
-M550 P"V-Core 3"                        ; set printer name
+; M550 P"V-Core 3"                        ; set printer name -- only for standalone use with network
 M669 K1                                 ; CoreXY
 G29 S1                                  ; Set Units to Millimeters
 
@@ -29,8 +29,8 @@ M208 X0 Y0 Z0 S1                               ; set axis minima
 M208 X310 Y300 Z300 S0                         ; set axis maxima
 
 ; define endstops
-M574 X1 S1 P"io1.in"                           ; configure active high endstops
-M574 Y2 S1 P"io0.in"                           ; configure active high endstops
+M574 X1 S1 P"io0.in"                           ; configure active high endstops
+M574 Y2 S1 P"io1.in"                           ; configure active high endstops
 M574 Z1 S2                                     ; configure Z-probe endstop for low end on Z
 
 ; Lead screw positions
@@ -39,7 +39,7 @@ M557 X20:280 Y20:280 P5                        ; define 5x5 mesh grid
 
 ; configurate heat bed
 M308 S0 P"temp0" Y"thermistor" T100000 B3950 A"Bed"    ; configure sensor 0 as thermistor on pin temp0
-M950 H0 C"out0" T0                                     ; create bed heater output on out5 and map it to sensor 0
+M950 H0 C"out1" T0                                     ; create bed heater output on out5 and map it to sensor 0
 M307 H0 B0 S1.00                                       ; disable bang-bang mode for the bed heater and set PWM limit
 M140 H0                                                ; map heated bed to heater 0
 M143 H0 S110                                           ; set temperature limit for heater 0 to 110C
@@ -48,9 +48,9 @@ M143 H0 S110                                           ; set temperature limit f
 ;; M307 H0 A303.1 C356.7 D1.4 S1.00 V24.0 B0
 
 ; define fans
-M950 F0 C"out3" Q500                   ; create fan 0 on pin out3 and set its frequency
+M950 F0 C"out7" Q500                   ; create fan 0 on pin out7 and set its frequency
 M106 P0 C"Hotend Fan" S0 H1 T45 L255   ; set fan 0 name and value. Thermostatic control turned on for Hotend
-M950 F1 C"out4" Q500                   ; create fan 1 on pin out4 and set its frequency
+M950 F1 C"out8" Q500                   ; create fan 1 on pin out8 and set its frequency
 M106 P1 C"Layer Fan" S0 H-1 L255       ; set fan 1 name and value. Thermostatic control is turned off
 
 ; define tool
@@ -58,7 +58,9 @@ M563 P0 D0 H1 F1           ; define tool 0
 G10 P0 X0 Y0 Z0            ; set tool 0 axis offsets
 G10 P0 R0 S0               ; set initial tool 0 active and standby temperatures to 0C
 
-M950 H1 C"out1" T1         ; create nozzle heater output on out2 and map it to sensor 1
+; hotend heater and temperature sensor
+M308 S1 P"temp1" Y"pt1000" A"Hotend" ; register hotend temperature sensor
+M950 H1 C"out2" T1         ; create nozzle heater output on out2 and map it to sensor 1
 M307 H1 B0 S1.00           ; disable bang-bang mode for heater and set PWM limit
 M143 H1 S250               ; set the maximum temperature in C for heater
 
@@ -66,13 +68,13 @@ M143 H1 S250               ; set the maximum temperature in C for heater
 M92 E830         			; set extruder steps per mm, 0.9 angle/step (LDO Pancake)
 M906 E800         			; set extruder motor current (mA) and idle factor in per cent
 
-M308 S1 P"temp1" Y"thermistor" T100000 B4725 C7.060000e-8 A"Hotend"  
+
 ;; Run Heater PID Tune!! 
 ;; M307 H1 A751.5 C196.6 D4.7 S1.00 V23.9 B0
 
 ;; BLTouch
-M950 S0 C"io2.out"                     ; Create a servo pin on io2
-M558 P9 C"io2.in" H5 F240 T10800 A5    ; set Z probe type to unmodulated and the dive height + speeds
+M950 S0 C"io5.out"                     ; Create a servo pin on io2
+M558 P9 C"io5.in" H5 F240 T10800 A5    ; set Z probe type to unmodulated and the dive height + speeds
 G31 P25 X-28.00 Y-13.00 Z0.90          ; set Z probe trigger value, offset and trigger height, more Z means closer to the bed
 
 ; Filament
