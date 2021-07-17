@@ -10,3 +10,6 @@ M119 ; Get Endstop Status
 ; BL touch
 M401 ; deploy the probe 
 M402 ; retract probe
+
+; Debugging
+M122 ; Diagnose
