@@ -1,6 +1,10 @@
 ; allow free movement of axes, even before homing
 M564 S0 H0
 
+; positioning
+G90 ; absolute
+G91 ; relative
+
 ; allow movement only after homing and within boundaries
 M564 S1 H1
 
